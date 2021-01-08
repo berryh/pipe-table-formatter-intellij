@@ -1,0 +1,26 @@
+<idea-plugin>
+	<id>net.berryh.pipe-table-formatter-intellij</id>
+	<name>Pipe Table Formatter</name>
+	<vendor email="berryh@aol.nl" url="https://berryh.net">Berryh</vendor>
+
+	<description><![CDATA[
+    <b>Pipe Table Formatter</b>
+    This is a pipe table formatter plugin for the IntelliJ platform.
+    It utilizes the pipe table formatter program by Jurrie Overgoor (see <a href="https://github.com/Jurrie/pipe-table-formatter">this</a>), which normally watches for file changes.
+    This plugin provides the same functionality, but as an action, which can be used from a context menu or with a shortcut.
+    ]]></description>
+
+	<idea-version since-build="203"/>
+
+	<depends>com.intellij.modules.platform</depends>
+	<depends>com.intellij.modules.lang</depends>
+
+	<actions>
+		<!-- Add your actions here -->
+		<group id="PipeTableFormatter.Actions" text="Pipe Table Formatter" popup="true">
+			<action id="PipeTableFormatter.FormatFile" class="net.berryh.pipetableformatter.action.FormatAllAction" text="Format Pipe Tables in File" description="Formats the currently opened file"/>
+			<add-to-group group-id="CodeMenu" anchor="last"/>
+			<add-to-group group-id="EditorPopupMenu" anchor="last"/>
+		</group>
+	</actions>
+</idea-plugin>
