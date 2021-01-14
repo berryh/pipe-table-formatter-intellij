@@ -32,20 +32,19 @@ public class FormatAllAction extends EditorAction
 				ApplicationManager.getApplication().runWriteAction(() -> {
 					final Document document = editor.getDocument();
 					final String documentText = document.getText();
-					final int assumedNewContentSize = (int) (documentText.getBytes().length * 1.1d);
+					final int assumedNewContentSize = (int) (documentText.getBytes(StandardCharsets.UTF_8).length * 1.1d);
 
 					try (final ByteArrayOutputStream outputStream = new ByteArrayOutputStream(assumedNewContentSize);
 					     final PrintStream printStream = new PrintStream(outputStream, false, StandardCharsets.UTF_8.name());
-					     final ByteArrayInputStream inputStream = new ByteArrayInputStream(documentText.getBytes());
+					     final ByteArrayInputStream inputStream = new ByteArrayInputStream(documentText.getBytes(StandardCharsets.UTF_8));
 					     final InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8))
 					{
 						final TableFormatter tableFormatter = new TableFormatter(printStream);
 						tableFormatter.format(inputStreamReader);
 						tableFormatter.close();
 
-						final String newContent = new String(outputStream.toByteArray(), StandardCharsets.UTF_8);
 						// IntelliJ document content can only have '\n' line separators.
-						final String sanitizedContent = newContent.replaceAll(System.lineSeparator(), "\n");
+						final String sanitizedContent = outputStream.toString(StandardCharsets.UTF_8).replaceAll(System.lineSeparator(), "\n");
 						document.setText(sanitizedContent);
 					}
 					catch (IOException e)
