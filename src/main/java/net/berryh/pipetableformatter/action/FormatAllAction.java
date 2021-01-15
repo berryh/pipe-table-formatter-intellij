@@ -18,6 +18,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
 import net.berryh.pipetableformatter.exception.PipeTableFormatterException;
+import org.apache.commons.lang3.StringUtils;
 import org.jurr.pipetableformatter.TableFormatter;
 
 public class FormatAllAction extends EditorAction
@@ -43,8 +44,7 @@ public class FormatAllAction extends EditorAction
 						tableFormatter.format(inputStreamReader);
 						tableFormatter.close();
 
-						// IntelliJ document content can only have '\n' line separators.
-						final String sanitizedContent = outputStream.toString(StandardCharsets.UTF_8).replaceAll(System.lineSeparator(), "\n");
+						final String sanitizedContent = sanitizeTableFormatterOutput(documentText, outputStream.toString(StandardCharsets.UTF_8));
 						document.setText(sanitizedContent);
 					}
 					catch (IOException e)
@@ -52,6 +52,18 @@ public class FormatAllAction extends EditorAction
 						throw new PipeTableFormatterException(e);
 					}
 				});
+			}
+
+			@Nonnull
+			private String sanitizeTableFormatterOutput(@Nonnull final String originalDocumentText, @Nonnull final String formattedDocumentText)
+			{
+				// IntelliJ document content can only have '\n' line separators.
+				String sanitizedContent = formattedDocumentText.replaceAll(System.lineSeparator(), "\n");
+				if (!originalDocumentText.endsWith("\n") && !originalDocumentText.endsWith(System.lineSeparator()) && sanitizedContent.endsWith("\n"))
+				{
+					sanitizedContent = StringUtils.chomp(sanitizedContent);
+				}
+				return sanitizedContent;
 			}
 		});
 	}
