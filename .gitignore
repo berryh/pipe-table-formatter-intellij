@@ -135,3 +135,4 @@ gradle-app.setting
 **/build/
 
 # End of https://www.toptal.com/developers/gitignore/api/gradle,java,intellij+all
+.sandbox/
