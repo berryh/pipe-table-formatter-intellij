@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'net.berryh'
-version '1.0.0'
+version '1.0.1'
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
@@ -34,7 +34,11 @@ intellij {
 
 patchPluginXml {
     changeNotes """
-    <b>Version 0.0.1</b>
-    Initial version, using the pipe-table-formatter by Jurrie (see <a href="https://github.com/Jurrie/pipe-table-formatter">this</a>).
+    <b>Version 1.0.1</b><br>
+    - Fix changelog version mistake for version 1.0.0<br>
+    - Add usage instructions<br>
+    <br>
+    <b>Version 1.0.0</b><br>
+    - Initial version, using the pipe-table-formatter by Jurrie (see <a href="https://github.com/Jurrie/pipe-table-formatter">this</a>).<br>
     """
 }

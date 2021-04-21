@@ -4,10 +4,20 @@
 	<vendor email="berryh@aol.nl" url="https://berryh.net">Berryh</vendor>
 
 	<description><![CDATA[
-    <b>Pipe Table Formatter</b>
-    This is a pipe table formatter plugin for the IntelliJ platform.
+    This is a pipe table formatter plugin for the IntelliJ platform, which formats pipe tables used in JBehave stories for example.
     It utilizes the pipe table formatter program by Jurrie Overgoor (see <a href="https://github.com/Jurrie/pipe-table-formatter">this</a>), which normally watches for file changes.
     This plugin provides the same functionality, but as an action, which can be used from a context menu or with a shortcut.
+    <br><br>
+    Using this plugin is simple:
+    <ol>
+    <li>Open a JBehave story or another file containing a pipe table.</li>
+    <li>Right-click in the editor to open the context menu.</li>
+    <li>Go to 'Pipe Table Formatter' and click 'Format Pipe Tables in File'.</li>
+    <li>All pipe tables in the opened file should now be formatted.</li>
+    <li>Alternatively, use the 'Pipe Table Formatter' submenu under the 'Code' menu option of your IDE.</li>
+    </ol>
+    <br>
+    There is no keyboard shortcut assigned by default, but as this is quite useful, it's recommended that one is added via the IDE Settings.
     ]]></description>
 
 	<idea-version since-build="203"/>
@@ -16,7 +26,6 @@
 	<depends>com.intellij.modules.lang</depends>
 
 	<actions>
-		<!-- Add your actions here -->
 		<group id="PipeTableFormatter.Actions" text="Pipe Table Formatter" popup="true">
 			<action id="PipeTableFormatter.FormatFile" class="net.berryh.pipetableformatter.action.FormatAllAction" text="Format Pipe Tables in File" description="Formats the currently opened file"/>
 			<add-to-group group-id="CodeMenu" anchor="last"/>
