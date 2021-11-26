@@ -2,9 +2,7 @@ package net.berryh.pipetableformatter.formatter;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
@@ -34,15 +32,15 @@ public class PipeTablePostFormatProcessor implements PostFormatProcessor
 
 	public PipeTablePostFormatProcessor()
 	{
-		LOGGER.info("Initializing PipeTablePostFormatProcessor");
+		LOGGER.debug("Initializing PipeTablePostFormatProcessor");
 		this.formatter = new PipeTableFormatter();
 		final Language story = Language.findLanguageByID("Story");
-		LOGGER.info("Found Story language: '{}'", story);
+		LOGGER.debug("Found Story language: '{}'", story);
 		if (story != null)
 		{
 			languagesToFormat.add(story);
 		}
-		LOGGER.info("Initialized PipeTablePostFormatProcessor");
+		LOGGER.debug("Initialized PipeTablePostFormatProcessor");
 	}
 
 	@Override
@@ -54,7 +52,7 @@ public class PipeTablePostFormatProcessor implements PostFormatProcessor
 		// Seems to be some sort of CodeInsight-related method.
 		final Throwable throwable = new Throwable();
 		throwable.fillInStackTrace();
-		LOGGER.info("ProcessElement has been called!", throwable);
+		LOGGER.debug("ProcessElement has been called!", throwable);
 		return source;
 	}
 
@@ -62,41 +60,41 @@ public class PipeTablePostFormatProcessor implements PostFormatProcessor
 	@Nonnull
 	public TextRange processText(@NotNull final PsiFile sourceFile, @NotNull final TextRange inputRange, @NotNull final CodeStyleSettings settings)
 	{
-		LOGGER.info("ProcessText has been called.");
-		LOGGER.info("Language for this file is: {}", sourceFile.getLanguage());
+		LOGGER.debug("ProcessText has been called.");
+		LOGGER.debug("Language for this file is: {}", sourceFile.getLanguage());
 		if (!languagesToFormat.contains(sourceFile.getLanguage()))
 		{
 			return inputRange;
 		}
 
-		LOGGER.info("Getting project and document.");
+		LOGGER.debug("Getting project and document.");
 		final Project project = sourceFile.getProject();
 		final Document document = PsiDocumentManager.getInstance(project).getDocument(sourceFile);
 		if (document == null)
 		{
-			LOGGER.info("Document is null.");
+			LOGGER.debug("Document is null.");
 			return inputRange;
 		}
 		if (!ReadonlyStatusHandler.ensureDocumentWritable(project, document))
 		{
-			LOGGER.info("Document is not writable.");
+			LOGGER.debug("Document is not writable.");
 			return inputRange;
 		}
 
-		LOGGER.info("Document exists and is writable.");
+		LOGGER.debug("Document exists and is writable.");
 		final String sourceToFormat = inputRange.substring(sourceFile.getText());
 		final String formattedSource = formatter.format(sourceToFormat);
 		final String finalContent = StringUtil.convertLineSeparators(formattedSource);
-		LOGGER.info("Document content has been formatted.");
+		LOGGER.debug("Document content has been formatted.");
 
 		WriteCommandAction.runWriteCommandAction(project, "Format Pipe Table", "Pipe Table Formatter", () -> {
-			LOGGER.info("Writing document.");
+			LOGGER.debug("Writing document.");
 			document.replaceString(inputRange.getStartOffset(), inputRange.getEndOffset(), finalContent);
 			PsiDocumentManager.getInstance(project).commitDocument(document);
-			LOGGER.info("Document has been written and is committed.");
+			LOGGER.debug("Document has been written and is committed.");
 		}, sourceFile);
 
-		LOGGER.info("Done processing, returning a new text range.");
+		LOGGER.debug("Done processing, returning a new text range.");
 		return TextRange.from(inputRange.getStartOffset(), finalContent.length());
 	}
 }

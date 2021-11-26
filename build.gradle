@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'net.berryh'
-version '1.1.0'
+version '1.1.1'
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
@@ -32,6 +32,9 @@ intellij {
 
 patchPluginXml {
     changeNotes = """
+    <b>Version 1.1.1</b><br>
+    - Reduce logging output.<br>
+    <br>
     <b>Version 1.1.0</b><br>
     - Integrate the Pipe Table Formatter as a standard formatter.<br>
     - Added a plugin icon.<br>
