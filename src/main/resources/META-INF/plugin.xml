@@ -7,8 +7,15 @@
     This is a pipe table formatter plugin for the IntelliJ platform, which formats pipe tables used in JBehave stories for example.
     It utilizes the pipe table formatter program by Jurrie Overgoor (see <a href="https://github.com/Jurrie/pipe-table-formatter">this</a>), which normally watches for file changes.
     This plugin provides the same functionality, but as an action, which can be used from a context menu or with a shortcut.
+    <br>
+    Since 1.1.0 it's also integrated as a normal formatter, into the standard formatting functionality of the IntelliJ Platform.
     <br><br>
     Using this plugin is simple:
+    <ol>
+    <li>Just use your formatting shortcut!</li>
+    </ol>
+    <b>Or</b>
+    <br>
     <ol>
     <li>Open a JBehave story or another file containing a pipe table.</li>
     <li>Right-click in the editor to open the context menu.</li>
@@ -24,6 +31,10 @@
 
 	<depends>com.intellij.modules.platform</depends>
 	<depends>com.intellij.modules.lang</depends>
+
+	<extensions defaultExtensionNs="com.intellij">
+		<postFormatProcessor implementation="net.berryh.pipetableformatter.formatter.PipeTablePostFormatProcessor"/>
+	</extensions>
 
 	<actions>
 		<group id="PipeTableFormatter.Actions" text="Pipe Table Formatter" popup="true">
