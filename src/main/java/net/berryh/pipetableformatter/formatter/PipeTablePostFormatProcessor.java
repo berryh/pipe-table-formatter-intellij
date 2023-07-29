@@ -19,6 +19,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
 import com.intellij.psi.impl.source.codeStyle.PostFormatProcessor;
 import org.jetbrains.annotations.NotNull;
+import org.jurr.pipetableformatter.PipeTableFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,7 +84,7 @@ public class PipeTablePostFormatProcessor implements PostFormatProcessor
 
 		LOGGER.debug("Document exists and is writable.");
 		final String sourceToFormat = inputRange.substring(sourceFile.getText());
-		final String formattedSource = formatter.format(sourceToFormat);
+		final String formattedSource = formatter.pipeTablesInString(sourceToFormat);
 		final String finalContent = StringUtil.convertLineSeparators(formattedSource);
 		LOGGER.debug("Document content has been formatted.");
 
