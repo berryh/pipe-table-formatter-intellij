@@ -10,7 +10,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
-import net.berryh.pipetableformatter.formatter.PipeTableFormatter;
+import org.jurr.pipetableformatter.PipeTableFormatter;
 
 public class FormatAllAction extends EditorAction
 {
@@ -24,7 +24,7 @@ public class FormatAllAction extends EditorAction
 				ApplicationManager.getApplication().runWriteAction(() -> {
 					final Document document = editor.getDocument();
 					final String documentText = document.getText();
-					final String formattedDocument = new PipeTableFormatter().format(documentText);
+					final String formattedDocument = new PipeTableFormatter().pipeTablesInString(documentText);
 					document.setText(formattedDocument);
 				});
 			}
