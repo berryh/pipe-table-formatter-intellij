@@ -53,6 +53,8 @@ public class PipeTablePostFormatProcessor implements PostFormatProcessor
 		final Throwable throwable = new Throwable();
 		throwable.fillInStackTrace();
 		LOGGER.debug("ProcessElement has been called!", throwable);
+
+		processText(source.getContainingFile(), source.getTextRange(), settings);
 		return source;
 	}
 

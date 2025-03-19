@@ -27,7 +27,7 @@
     There is no keyboard shortcut assigned by default, but as this is quite useful, it's recommended that one is added via the IDE Settings.
     ]]></description>
 
-	<idea-version since-build="203"/>
+	<idea-version since-build="223"/>
 
 	<depends>com.intellij.modules.platform</depends>
 	<depends>com.intellij.modules.lang</depends>
